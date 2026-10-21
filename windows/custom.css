@@ -1,0 +1,355 @@
+/* ============================================================
+   VS Code custom UI — performance edition
+   Keeps rounded corners, Explorer colors, and command-palette blur
+   while avoiding expensive selectors, shadows, and transitions.
+   ============================================================ */
+
+:root {
+  --custom-ui-font: "JetBrains Mono", "Hack", monospace;
+
+  --custom-ui-radius: 16px;
+  --custom-ui-small-radius: 8px;
+  --custom-ui-control-radius: 10px;
+
+  --custom-ui-accent: #b49dbb;
+  --custom-ui-purple: #cba6e6;
+  --custom-ui-blue: #7db8f3;
+
+  /* Old Explorer colors */
+  --explorer-text: #efe8f1;
+  --explorer-selected-bg: #747e99;
+  --explorer-selected-border: #586a94;
+  --explorer-selected-text: #a89dc5;
+  --explorer-ignored: #a5a2a2;
+
+  /*
+   Full-screen backdrop blur is the most expensive visual effect here.
+   Keep this at 1–2px for responsiveness. Set it to 0px for maximum speed.
+  */
+  --command-palette-blur: 0px;
+}
+
+/* ---------- Typography ---------- */
+
+.monaco-workbench,
+.monaco-workbench .monaco-list-row,
+.monaco-workbench .monaco-tree-row,
+.monaco-workbench .tab-label,
+.monaco-workbench .quick-input-widget,
+.monaco-workbench .monaco-menu,
+.monaco-workbench .monaco-hover {
+  font-family: var(--custom-ui-font) !important;
+}
+
+/* ---------- Main rounded surfaces ---------- */
+
+/*
+ Avoid width/height calculations and large shadows on the main workbench.
+ Those force more layout and paint work during resizing and panel changes.
+*/
+.monaco-workbench .part.sidebar,
+.monaco-workbench .part.auxiliarybar,
+.monaco-workbench .part.editor,
+.monaco-workbench .part.panel {
+  border-radius: var(--custom-ui-radius) !important;
+  overflow: clip !important;
+}
+
+/* ---------- Tabs ---------- */
+
+.monaco-workbench .part.editor .tabs-container {
+  padding: 5px !important;
+  gap: 3px !important;
+}
+
+.monaco-workbench .part.editor .tab {
+  border: 0 !important;
+  border-radius: var(--custom-ui-small-radius) !important;
+}
+
+.monaco-workbench .part.editor .tab.selected {
+  background: color-mix(
+    in srgb,
+    var(--custom-ui-accent) 18%,
+    transparent
+  ) !important;
+}
+
+.monaco-workbench .part.editor .tab:hover:not(.selected) {
+  background: rgba(255, 255, 255, 0.045) !important;
+}
+
+.monaco-workbench .part.editor .tab-border-top-container,
+.monaco-workbench .part.editor .tab-border-bottom-container {
+  display: none !important;
+}
+
+/* ---------- Active line ---------- */
+
+/*
+ Keep the gutter highlight but remove transforms and shadows.
+ These update every time the cursor moves.
+*/
+.monaco-workbench
+  .part.editor
+  .monaco-editor
+  .margin-view-overlays
+  .current-line-margin,
+.monaco-workbench
+  .part.editor
+  .monaco-editor
+  .margin-view-overlays
+  .current-line-exact-margin {
+  border-radius: var(--custom-ui-small-radius) !important;
+  background: color-mix(
+    in srgb,
+    var(--custom-ui-accent) 10%,
+    transparent
+  ) !important;
+}
+
+/* ---------- Sidebar ---------- */
+
+.monaco-workbench .part.sidebar > .title > .title-label h2,
+.monaco-workbench .part.auxiliarybar > .title > .title-label h2 {
+  color: var(--custom-ui-accent) !important;
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  text-transform: none !important;
+}
+
+.monaco-workbench .part.sidebar .pane-header,
+.monaco-workbench .part.auxiliarybar .pane-header,
+.monaco-workbench .part.panel .pane-header {
+  border-radius: var(--custom-ui-small-radius) !important;
+}
+
+.monaco-workbench .part.sidebar .pane-header.expanded,
+.monaco-workbench .part.auxiliarybar .pane-header.expanded {
+  background: color-mix(
+    in srgb,
+    var(--custom-ui-accent) 9%,
+    transparent
+  ) !important;
+}
+
+/* Activity-bar active item: no pseudo-element shadow */
+.monaco-workbench
+  .part.sidebar
+  ul[role="tablist"]
+  .action-item.checked,
+.monaco-workbench
+  .part.auxiliarybar
+  ul[role="tablist"]
+  .action-item.checked {
+  border-radius: var(--custom-ui-small-radius) !important;
+  background: color-mix(
+    in srgb,
+    var(--custom-ui-accent) 16%,
+    transparent
+  ) !important;
+}
+
+.monaco-workbench
+  .part.sidebar
+  ul[role="tablist"]
+  .active-item-indicator,
+.monaco-workbench
+  .part.auxiliarybar
+  ul[role="tablist"]
+  .active-item-indicator {
+  display: none !important;
+}
+
+/* ---------- Explorer ---------- */
+
+.monaco-workbench
+  .explorer-folders-view
+  .monaco-list-row
+  .monaco-icon-label
+  .label-name {
+  color: var(--explorer-text) !important;
+  font-family: var(--custom-ui-font) !important;
+  font-size: 14px !important;
+  font-weight: 400 !important;
+}
+
+.monaco-workbench
+  .explorer-folders-view
+  .monaco-list-row.selected {
+  background: var(--explorer-selected-bg) !important;
+  outline: 1px solid var(--explorer-selected-border) !important;
+}
+
+.monaco-workbench
+  .explorer-folders-view
+  .monaco-list-row.selected
+  .label-name {
+  color: var(--explorer-selected-text) !important;
+}
+
+.explorer-item-edited {
+  font-family: var(--custom-ui-font) !important;
+  font-size: 14px !important;
+}
+
+.codicon-tree-item-expanded::before {
+  display: none !important;
+}
+
+/*
+ Do not use :has(.git-decoration-ignored).
+ :has() over every virtualized file row is costly while scrolling.
+*/
+.monaco-workbench .git-decoration-ignored,
+.monaco-workbench .git-decoration-ignored.label-name,
+.monaco-workbench .git-decoration-ignored .label-name {
+  color: var(--explorer-ignored) !important;
+  opacity: 0.62 !important;
+  font-style: italic !important;
+  text-decoration: line-through !important;
+}
+
+/* ---------- Lists ---------- */
+
+/* Rounded rows only; no per-row transitions or shadows */
+.monaco-workbench .monaco-list-row,
+.monaco-workbench .monaco-tree-row {
+  border-radius: 7px !important;
+}
+
+/* ---------- Command palette blur ---------- */
+
+#command-blur {
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 99 !important;
+
+  pointer-events: none !important;
+  visibility: hidden;
+
+  background: rgba(0, 0, 0, 0.27) !important;
+  -webkit-backdrop-filter: blur(var(--command-palette-blur)) !important;
+  backdrop-filter: blur(var(--command-palette-blur)) !important;
+
+  opacity: 0;
+  contain: strict;
+  transform: translateZ(0);
+  transition:
+    opacity 85ms linear,
+    visibility 0s linear 85ms !important;
+}
+
+.monaco-workbench.custom-command-palette-open #command-blur {
+  visibility: visible;
+  opacity: 1;
+  transition:
+    opacity 85ms linear,
+    visibility 0s linear 0s !important;
+}
+
+.monaco-workbench .quick-input-widget {
+  z-index: 100 !important;
+  padding: 7px !important;
+  border-radius: var(--custom-ui-radius) !important;
+
+  /* One small shadow is retained only on the palette itself. */
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38) !important;
+}
+
+.monaco-workbench
+  .quick-input-widget
+  .quick-input-filter
+  .monaco-inputbox {
+  margin-bottom: 9px !important;
+  border-radius: var(--custom-ui-control-radius) !important;
+}
+
+.monaco-workbench
+  .quick-input-widget
+  .monaco-list-row
+  .label-name {
+  color: #c2adc9 !important;
+}
+
+.monaco-workbench
+  .quick-input-widget
+  .monaco-list-row.focused
+  .label-name,
+.monaco-workbench
+  .quick-input-widget
+  .monaco-list-row.selected
+  .label-name {
+  color: #ffffff !important;
+}
+
+/* ---------- Menus, dialogs, inputs ---------- */
+
+.monaco-workbench .monaco-hover,
+.monaco-workbench .monaco-editor-hover,
+.monaco-workbench .monaco-menu,
+.monaco-workbench .monaco-button,
+.monaco-workbench .monaco-select-box,
+.monaco-workbench .monaco-inputbox,
+.monaco-workbench .find-widget,
+.monaco-workbench .editor-widget,
+.monaco-workbench .suggest-widget,
+.monaco-workbench .suggest-details,
+.monaco-workbench .parameter-hints-widget,
+.monaco-workbench .notification-toast,
+.monaco-workbench .notifications-center,
+.context-view .monaco-menu-container {
+  border-radius: var(--custom-ui-control-radius) !important;
+}
+
+/* Backdrop blur on every hover popup was removed. */
+.monaco-workbench .monaco-editor-hover,
+.monaco-workbench .monaco-hover {
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28) !important;
+}
+
+/* ---------- Scrollbars ---------- */
+
+/*
+ Keep the scrollbar width constant.
+ Resizing it on hover causes extra painting while scrolling.
+*/
+.monaco-workbench .scrollbar.vertical .slider {
+  left: auto !important;
+  right: 2px !important;
+  width: 4px !important;
+  min-width: 4px !important;
+  border-radius: 999px !important;
+}
+
+.monaco-workbench .scrollbar.horizontal .slider {
+  bottom: 2px !important;
+  height: 4px !important;
+  min-height: 4px !important;
+  border-radius: 999px !important;
+}
+
+/* ---------- Status bar accents ---------- */
+
+.monaco-workbench .part.statusbar .codicon-git-branch,
+.monaco-workbench .part.statusbar .codicon-git-commit,
+.monaco-workbench .part.statusbar .codicon-repo,
+.monaco-workbench .part.statusbar .codicon-cloud-upload {
+  color: var(--custom-ui-purple) !important;
+}
+
+.monaco-workbench .part.statusbar .codicon-sync,
+.monaco-workbench .part.statusbar .codicon-refresh,
+.monaco-workbench .part.statusbar .codicon-remote {
+  color: var(--custom-ui-blue) !important;
+}
+
+/* ---------- Small cleanup ---------- */
+
+.editor-group-watermark .shortcuts {
+  display: none !important;
+}
+
+.part.titlebar .window-appicon {
+  display: none !important;
+}
