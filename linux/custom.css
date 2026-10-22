@@ -1,8 +1,4 @@
-/* ============================================================
-   VS Code custom UI — performance edition
-   Keeps rounded corners, Explorer colors, and command-palette blur
-   while avoiding expensive selectors, shadows, and transitions.
-   ============================================================ */
+/* Cheap selectors only: no :has(), no per-row shadows or transitions. */
 
 :root {
   --custom-ui-font: "JetBrains Mono", "Hack", monospace;
@@ -21,12 +17,6 @@
   --explorer-selected-border: #586a94;
   --explorer-selected-text: #a89dc5;
   --explorer-ignored: #a5a2a2;
-
-  /*
-   Full-screen backdrop blur is the most expensive visual effect here.
-   Keep this at 1–2px for responsiveness. Set it to 0px for maximum speed.
-  */
-  --command-palette-blur: 0px;
 }
 
 /* ---------- Typography ---------- */
@@ -43,10 +33,6 @@
 
 /* ---------- Main rounded surfaces ---------- */
 
-/*
- Avoid width/height calculations and large shadows on the main workbench.
- Those force more layout and paint work during resizing and panel changes.
-*/
 .monaco-workbench .part.sidebar,
 .monaco-workbench .part.auxiliarybar,
 .monaco-workbench .part.editor,
@@ -86,10 +72,6 @@
 
 /* ---------- Active line ---------- */
 
-/*
- Keep the gutter highlight but remove transforms and shadows.
- These update every time the cursor moves.
-*/
 .monaco-workbench
   .part.editor
   .monaco-editor
@@ -133,7 +115,6 @@
   ) !important;
 }
 
-/* Activity-bar active item: no pseudo-element shadow */
 .monaco-workbench
   .part.sidebar
   ul[role="tablist"]
@@ -169,7 +150,6 @@
   .monaco-icon-label
   .label-name {
   color: var(--explorer-text) !important;
-  font-family: var(--custom-ui-font) !important;
   font-size: 14px !important;
   font-weight: 400 !important;
 }
@@ -189,7 +169,6 @@
 }
 
 .explorer-item-edited {
-  font-family: var(--custom-ui-font) !important;
   font-size: 14px !important;
 }
 
@@ -197,12 +176,7 @@
   display: none !important;
 }
 
-/*
- Do not use :has(.git-decoration-ignored).
- :has() over every virtualized file row is costly while scrolling.
-*/
 .monaco-workbench .git-decoration-ignored,
-.monaco-workbench .git-decoration-ignored.label-name,
 .monaco-workbench .git-decoration-ignored .label-name {
   color: var(--explorer-ignored) !important;
   opacity: 0.62 !important;
@@ -212,7 +186,6 @@
 
 /* ---------- Lists ---------- */
 
-/* Rounded rows only; no per-row transitions or shadows */
 .monaco-workbench .monaco-list-row,
 .monaco-workbench .monaco-tree-row {
   border-radius: 7px !important;
@@ -229,8 +202,6 @@
   visibility: hidden;
 
   background: rgba(0, 0, 0, 0.27) !important;
-  -webkit-backdrop-filter: blur(var(--command-palette-blur)) !important;
-  backdrop-filter: blur(var(--command-palette-blur)) !important;
 
   opacity: 0;
   contain: strict;
@@ -253,7 +224,6 @@
   padding: 7px !important;
   border-radius: var(--custom-ui-radius) !important;
 
-  /* One small shadow is retained only on the palette itself. */
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.38) !important;
 }
 
@@ -302,7 +272,6 @@
   border-radius: var(--custom-ui-control-radius) !important;
 }
 
-/* Backdrop blur on every hover popup was removed. */
 .monaco-workbench .monaco-editor-hover,
 .monaco-workbench .monaco-hover {
   box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28) !important;
@@ -310,10 +279,7 @@
 
 /* ---------- Scrollbars ---------- */
 
-/*
- Keep the scrollbar width constant.
- Resizing it on hover causes extra painting while scrolling.
-*/
+/* Constant width: resizing on hover repaints while scrolling. */
 .monaco-workbench .scrollbar.vertical .slider {
   left: auto !important;
   right: 2px !important;

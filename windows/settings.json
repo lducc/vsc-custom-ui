@@ -1,0 +1,126 @@
+{
+  "window.title": " ",
+  "window.titleBarStyle": "custom",
+  "window.commandCenter": false,
+  "window.zoomLevel": -1,
+  "workbench.colorTheme": "Catppuccin Noctis Mocha",
+  "workbench.iconTheme": "catppuccin-macchiato",
+  "workbench.activityBar.location": "top",
+  "workbench.sideBar.location": "right",
+  "workbench.secondarySideBar.defaultVisibility": "hidden",
+  "workbench.secondarySideBar.showLabels": false,
+  "workbench.panel.showLabels": false,
+  "workbench.editor.wrapTabs": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.editorActionsLocation": "titleBar",
+  "workbench.list.smoothScrolling": true,
+  "breadcrumbs.enabled": false,
+  "explorer.compactFolders": false,
+  "editor.fontFamily": "JetBrains Mono, Hack, Consolas, 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.renderLineHighlight": "gutter",
+  "editor.renderWhitespace": "none",
+  "editor.guides.indentation": false,
+  "editor.minimap.enabled": false,
+  "editor.smoothScrolling": true,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorSmoothCaretAnimation": "on",
+  "editor.mouseWheelZoom": true,
+  "editor.mouseWheelScrollSensitivity": 1.5,
+  "editor.fastScrollSensitivity": 3,
+  "editor.emptySelectionClipboard": false,
+  "editor.rename.enablePreview": false,
+  "editor.hover.enabled": "off",
+  "editor.inlineSuggest.suppressInSnippetMode": true,
+  "editor.inlineSuggest.triggerCommandOnProviderChange": true,
+  "editor.suggest.filterGraceful": true,
+  "editor.suggest.matchOnWordStartOnly": false,
+  "editor.suggest.showTypeParameters": true,
+  "editor.quickSuggestions": {
+    "comments": "on",
+    "strings": "on"
+  },
+  "editor.tokenColorCustomizations": {
+    "textMateRules": [
+      {
+        "scope": "keyword",
+        "settings": {
+          "fontStyle": "italic"
+        }
+      }
+    ]
+  },
+  "code-runner.runInTerminal": true,
+  "code-runner.executorMap": {
+    "python": "python3 -u"
+  },
+  "terminal.integrated.defaultProfile.windows": "PowerShell",
+  "terminal.integrated.fontSize": 17,
+  "terminal.integrated.smoothScrolling": true,
+  "terminal.integrated.cursorBlinking": true,
+  "terminal.integrated.stickyScroll.enabled": false,
+  "terminal.integrated.initialHint": false,
+  "terminal.integrated.allowedLinkSchemes": [
+    "file",
+    "http",
+    "https",
+    "mailto",
+    "vscode",
+    "vscode-insiders",
+    "ms-settings"
+  ],
+  "terminal.integrated.suggest.enabled": true,
+  "terminal.integrated.suggest.providers": {
+    "lsp": true
+  },
+  "terminal.integrated.suggest.quickSuggestions": {
+    "arguments": "on",
+    "commands": "on",
+    "unknown": "off"
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportCompletions": true,
+  "python.analysis.useLibraryCodeForTypes": true,
+  "python.terminal.useEnvFile": true,
+  "search.searchView.keywordSuggestions": true,
+  "debug.console.historySuggestions": true,
+  "files.trimTrailingWhitespace": true,
+  "files.associations": {
+    "*.rmd": "markdown"
+  },
+  "ridiculousCoding.reducedEffects": false,
+  "ridiculousCoding.sound": false,
+  "ridiculousCoding.explosions": false,
+  "ridiculousCoding.chars": false,
+  "ridiculousCoding.shake": false,
+  "ridiculousCoding.fireworks": false,
+  "ridiculousCoding.blips": false,
+  "chat.viewSessions.orientation": "stacked",
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false
+  },
+  "vscode-pets.petSize": "small",
+  "vscode-pets.petColor": "black",
+  "vscode-pets.theme": "forest",
+  "vscode-pets.throwBallWithMouse": true,
+  "vscode_custom_css.imports": [
+    "file:///C:/code/setup-ui/custom.js",
+    "file:///C:/code/setup-ui/custom.css"
+  ],
+  "security.allowedUNCHosts": [
+    "wsl.localhost",
+    "wsl$"
+  ],
+  "remote.autoForwardPortsSource": "hybrid",
+  "editor.largeFileOptimizations": false,
+  "r.rpath.windows": "C:/PROGRA~1/R/R-46~1.0/bin/x64",
+  "r.alwaysUseActiveTerminal": true,
+  "r.bracketedPaste": true,
+  "git.autofetch": true,
+  "terminal.integrated.mouseWheelScrollSensitivity": 3,
+  "terminal.integrated.gpuAcceleration": "off"
+}

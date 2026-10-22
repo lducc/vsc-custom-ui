@@ -27,11 +27,6 @@
     workbench.appendChild(overlay);
   }
 
-  /*
-   This checks only inline state changed by VS Code.
-   It avoids getComputedStyle(), repeated animation-frame scans,
-   and observation of the entire workbench.
-  */
   function syncFromQuickInput() {
     if (!quickInput?.isConnected) {
       quickInputObserver?.disconnect();
@@ -58,10 +53,6 @@
     quickInputObserver?.disconnect();
     quickInput = current;
 
-    /*
-     Only three attributes on one element are observed.
-     No subtree observation, polling, or continuous DOM scans.
-    */
     quickInputObserver = new MutationObserver(syncFromQuickInput);
     quickInputObserver.observe(quickInput, {
       attributes: true,
@@ -76,10 +67,6 @@
     showBlur();
 
     if (!bindQuickInput()) {
-      /*
-       The widget may be created just after the shortcut.
-       Two one-shot checks are enough without running a frame loop.
-      */
       setTimeout(bindQuickInput, 0);
       setTimeout(bindQuickInput, 60);
     }
@@ -106,10 +93,6 @@
       workbench.classList.contains(OPEN_CLASS) &&
       (key === "escape" || key === "enter")
     ) {
-      /*
-       VS Code processes the key first; then the one observed element
-       reports whether the quick input actually closed.
-      */
       setTimeout(syncFromQuickInput, 0);
     }
   }
@@ -127,10 +110,6 @@
 
     document.addEventListener("keydown", handleKeydown, true);
 
-    /*
-     A click may select a command and close the palette.
-     This handler does no work unless the blur is currently visible.
-    */
     document.addEventListener(
       "click",
       () => {
