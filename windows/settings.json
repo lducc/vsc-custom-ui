@@ -108,8 +108,8 @@
   "vscode-pets.theme": "forest",
   "vscode-pets.throwBallWithMouse": true,
   "vscode_custom_css.imports": [
-    "file:///C:/code/setup-ui/custom.js",
-    "file:///C:/code/setup-ui/custom.css"
+    "file:///C:/code/vsc-custom-ui/windows/custom.css",
+    "file:///C:/code/vsc-custom-ui/windows/custom.js"
   ],
   "security.allowedUNCHosts": [
     "wsl.localhost",
