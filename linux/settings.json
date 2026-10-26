@@ -29,7 +29,7 @@
   "workbench.editor.tabActionReserveSpace": false,
   "workbench.tree.indent": 11,
   "explorer.openEditors.visible": 0,
-
+  "editor.wordWrap": "on",
   "editor.fontFamily": "'Maple Mono NF', 'JetBrains Mono', monospace",
   "editor.fontSize": 16,
   "editor.lineHeight": 23,
